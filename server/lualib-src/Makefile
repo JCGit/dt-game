@@ -1,7 +1,7 @@
-CFLAGS = -fPIC -O3 -Wall -std=gnu99 
+CFLAGS = -fPIC -O3 -Wall -std=gnu99
 CFLAGS += -I../skynet-dist/3rd/lua
 
-CPPFLAGS = -g -fPIC -Wall -std=c++0x 
+CPPFLAGS = -g -fPIC -Wall -std=c++0x
 
 LFLAGS = -shared
 DEST=../luaclib
@@ -18,7 +18,7 @@ $(DEST):
 	mkdir -p $@
 
 $(HASH_SO): $(HASH_SRC) $(DEST) 
-	$(CC) $(LFLAGS) -o $@ $(CFLAGS) $<
+	$(CC) $(LFLAGS) -o $@ $(CFLAGS) $< -llua
 
 $(PROTOBUF_SO):
 	cd pbc && $(MAKE) clean && $(MAKE)
@@ -27,7 +27,7 @@ $(PROTOBUF_SO):
 	cp pbc/binding/lua53/protobuf.lua ../lualib
 
 $(SOCKET_SO):
-	cd luasocket-3.0-rc1 && $(MAKE) linux LUAV=5.3
+	cd luasocket-3.0-rc1 && $(MAKE) macosx LUAV=5.3
 	cp luasocket-3.0-rc1/src/socket.so.3.0-rc1 $@
 	
 $(JSON_SO):
